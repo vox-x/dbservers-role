@@ -1,0 +1,19 @@
+#rollout dbserver config
+- name: Installeer mysql
+  apt:
+    name: mysql-server
+    state: present
+    update_cache: yes
+
+- name: Installeer mysql python package
+  apt:
+    name: python3-pymysql
+    state: present
+
+- name: Maak mysql user aan
+  community.mysql.mysql_user:
+    name: "{{ mysql_user }}"
+    password: "{{ mysql_password }}"
+    priv: "*.*:ALL"
+    state: present
+    login_unix_socket: /var/run/mysqld/mysqld.sock
